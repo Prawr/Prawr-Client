@@ -1,0 +1,19 @@
+{
+  "name": "Prawr-Client",
+  "version": "0.0.1",
+  "description": "Frontend for Prawr",
+  "private": true,
+  "author": "https://github.com/Prawr/",
+  "repository": "https://github.com/Prawr/Prawr-Client",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
