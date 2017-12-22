@@ -5,7 +5,8 @@
 
 ---
 <p align="center">This is the client repository.  
-Check out the [server](https://github.com/Prawr/Prawr-Server) and [meta](https://github.com/Prawr/Prawr)</p>
+**Check out the <a href="https://github.com/Prawr/Prawr-Server">server</a> and <a href="https://github.com/Prawr/Prawr)">meta</a>**
+</p>
 
 ---
 

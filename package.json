@@ -7,6 +7,13 @@
   "repository": "https://github.com/Prawr/Prawr-Client",
   "jest": {
     "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/node_modules/",
+      "<rootDir>/scripts/",
+      "<rootDir>/coverage/",
+      "<rootDir>/public/",
+      "<rootDir>/config/"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
