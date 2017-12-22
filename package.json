@@ -6,7 +6,7 @@
   "author": "https://github.com/Prawr/",
   "repository": "https://github.com/Prawr/Prawr-Client",
   "jest": {
-    "coverageDirectory": "tests/coverage",
+    "coverageDirectory": "coverage",
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
