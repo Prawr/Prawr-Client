@@ -5,7 +5,7 @@
 
 ---
 <p align="center">This is the client repository.  
-**Check out the <a href="https://github.com/Prawr/Prawr-Server">server</a> and <a href="https://github.com/Prawr/Prawr)">meta</a>**
+<b>Check out the <a href="https://github.com/Prawr/Prawr-Server">server</a> and <a href="https://github.com/Prawr/Prawr)">meta</a></b>
 </p>
 
 ---
@@ -13,3 +13,17 @@
 ## General info
 The client is built with [react](https://reactjs.org/), tests are written with [jest](https://facebook.github.io/jest/) and can be pushed to code climate.
 *coming soon*
+### Node Commands
+Currently there are these commands available via `npm run <command>`:  
+* `dev` Starts the dev Server
+* `build` Builds the project
+* `test` Executes a JEST-Test
+* `test-coverage` Executes a JEST-coverage test and exports the data into the `/coverage/` directory.
+
+## Design
+
+### Fonts
+There are three main fonts, those are:
+* **Roboto** for normal text
+* **Poiret One** for headlines
+* **Julius Sans One** For things such as the page title
