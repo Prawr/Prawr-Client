@@ -20,6 +20,9 @@ Currently there are these commands available via `npm run <command>`:
 * `test` Executes a JEST-Test
 * `test-coverage` Executes a JEST-coverage test and exports the data into the `/coverage/` directory.
 
+### API-Connection
+For the API-Connection, we use the [unirest client](http://unirest.io/nodejs.html) library.
+
 ## Design
 
 ### Fonts

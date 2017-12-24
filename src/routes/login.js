@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Config from '../config';
+import ApiRoute from '../helpers/ApiRoute';
+import SessionHelper from '../helpers/SessionHelper';
+
 // Assets
 import Wallpaper from '../assets/wallpaper.jpg';
 import LionLogo from '../assets/lion_sm.png';
 
+// Rest Client
+import unirest from 'unirest';
+
+// Styles
 const Page = styled.div`
     background: url(${ Wallpaper }) no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -19,12 +27,12 @@ const Page = styled.div`
 const LoginForm = styled.div`
     color: white;
     width: 600px;
-    height: 400px;
+    height: 460px;
     background-color: #33373C;
     top: 50%;
     left: 50%;
     margin-left: -300px;
-    margin-top: -200px;
+    margin-top: -230px;
     position:relative;
     border-radius: 5px;
 
@@ -55,7 +63,7 @@ const LogoArea = styled.div`
 
 const Logo = styled.img`
     width:80%;
-    margin-top: 25%;
+    margin-top: 30%;
     margin-bottom: 0;
 `;
 
@@ -146,7 +154,86 @@ const RegisterInfo = styled.div`
     }
 `;
 
+const ErrorText = styled.div`
+    color: red;
+    opacity: 0.9;
+    padding: 5px 8px;
+    font-size: 10pt;
+    width: 65%;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+    margin-bottom: 0px;
+    text-align: center;
+`;
+
 class Login extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            loginText: 'Login',
+            usernameStyle: {},
+            passwordStyle: {},
+            infoText: ''
+        };
+    }
+
+    onSubmit() {
+        this.setState({
+            loginText: 'Logging in...',
+            usernameStyle: {},
+            passwordStyle: {}
+        });
+        let errorStyle = {
+            borderBottom: '1px solid red'
+        };
+
+        const url = ApiRoute('/authenticate');
+
+        const username = this.state.username;
+        const password = this.state.password;
+
+        unirest
+            .post(url)
+            .headers( {'Content-Type': 'application/json'} )
+            .send( JSON.stringify({ username,password }) )
+            .end( (response) => {
+                
+                if(response.body.type === 'USERNAME_INVALID') {
+                    
+                    this.setState({
+                        usernameStyle: errorStyle,
+                        infoText: 'We couldn\'t find a user with that name'
+                    });
+
+                } else if(response.body.type === 'PASSWORD_INVALID') {
+
+                    this.setState({
+                        passwordStyle: errorStyle,
+                        infoText: 'The entered password doesn\'t match.'
+                    });
+
+                } else if(response.body.type === 'TOKEN_GRANT') {
+
+                    SessionHelper.saveCookie('token', response.body.token, 14);
+                    // user is now logged in1
+
+                }
+            });
+
+        this.setState({
+            loginText: 'Login'
+        });
+    }
+
+    keyDown(key) {
+        if(key.keyCode === 13) {
+            this.onSubmit();
+        }  
+    }
+
     render() {
         return(
             <Page class="container">
@@ -159,24 +246,39 @@ class Login extends Component {
                     <InputArea>
                         <LoginGreeting className="text-info">Login</LoginGreeting>
 
+                        {
+                            (this.state.infoText.length>1) ? <ErrorText>{ this.state.infoText }</ErrorText> : ''
+                        }
+                        <br/>
                         <UserInputLabel>Username</UserInputLabel>
                         <div class="input-group">
                             <br/>
-                            <UserInput type="text" />
+                            <UserInput 
+                                type="text"
+                                onKeyDown={ (e) => this.keyDown(e) }
+                                style={ this.state.usernameStyle }
+                                onChange={ (input) => { this.setState({username:input.target.value}) }}/>
                         </div>
 
                         <UserInputLabel>Password</UserInputLabel>
                         <div class="input-group">
                             <br/>
-                            <UserInput type="password" />
+                            <UserInput 
+                                type="password"
+                                onKeyDown={ (e) => this.keyDown(e) }
+                                style={ this.state.passwordStyle }
+                                onChange={ (input) => { this.setState({password:input.target.value}) }}/>
                         </div>
-                        <HintLink href="" className="text-muted">
+                        <HintLink href="" className="text-muted" id="username" >
                             Forgot password?
                         </HintLink>
                         
                         <br/>
 
-                        <SubmitButton type="button" className="btn btn-lg btn-info">Login</SubmitButton>
+                        <SubmitButton 
+                            type="button" 
+                            className="btn btn-lg btn-info"
+                            onClick={ () => this.onSubmit() }>{ this.state.loginText }</SubmitButton>
 
                         <br/>
 
