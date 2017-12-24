@@ -82,7 +82,7 @@ const InputArea = styled.div`
 `;
 
 const LoginGreeting = styled.h2`
-    font-family: 'Poiret One', sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin-bottom: 0.5em;
     text-align:center;
     width: 65%;
@@ -99,12 +99,15 @@ const UserInput = styled.input`
     border: none;
     outline: 0px;
     color: #efefef;
-    border-bottom: 1px solid rgba(255,255,255,0.25);
+    border-bottom: 2px solid rgba(255,255,255,0.25);
     float:left;
     margin-bottom: 1em;
+    padding-left:0;
+    padding-right:0;
+    padding-bottom: 3px;
 
     &:focus {
-        border-bottom: 1px solid white;
+        border-bottom: 2px solid white;
     }
 
     @media(max-width: 500px) {
@@ -157,29 +160,31 @@ const RegisterInfo = styled.div`
 const ErrorText = styled.div`
     color: red;
     opacity: 0.9;
-    padding: 5px 8px;
-    font-size: 10pt;
+    font-size: 13pt;
     width: 65%;
-    border: 1px solid rgba(255,255,255,0.2);
     border-radius: 4px;
     margin-bottom: 0px;
-    text-align: center;
+    text-align: left;
 `;
+
 
 class Login extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            loginText: 'Login',
-            usernameStyle: {},
-            passwordStyle: {},
-            infoText: ''
+            username: '', // current input value
+            password: '', // current input value
+            loginText: 'Login', // current button text
+            usernameStyle: {}, // textbox style
+            passwordStyle: {}, // textbox style
+            infoText: '' // infobox (set to '' to hide)
         };
     }
 
+    /**
+     * Called when logging in
+     */
     onSubmit() {
         this.setState({
             loginText: 'Logging in...',
@@ -187,13 +192,14 @@ class Login extends Component {
             passwordStyle: {}
         });
         let errorStyle = {
-            borderBottom: '1px solid red'
+            borderBottom: '2px solid red'
         };
 
         const url = ApiRoute('/authenticate');
 
         const username = this.state.username;
         const password = this.state.password;
+        let success = false;
 
         unirest
             .post(url)
@@ -219,13 +225,16 @@ class Login extends Component {
 
                     SessionHelper.saveCookie('token', response.body.token, 14);
                     // user is now logged in1
-
+                    success = true;
                 }
             });
 
-        this.setState({
-            loginText: 'Login'
-        });
+        // to reset form
+        if(!success) {
+            this.setState({
+                loginText: 'Login'
+            });
+        }
     }
 
     keyDown(key) {
@@ -244,7 +253,7 @@ class Login extends Component {
                         <Title>Prawr</Title>
                     </LogoArea>
                     <InputArea>
-                        <LoginGreeting className="text-info">Login</LoginGreeting>
+                        <LoginGreeting className="text-info">LOGIN</LoginGreeting>
 
                         {
                             (this.state.infoText.length>1) ? <ErrorText>{ this.state.infoText }</ErrorText> : ''

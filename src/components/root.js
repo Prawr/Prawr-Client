@@ -22,7 +22,7 @@ class Root extends Component {
                         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" 
                         crossorigin="anonymous"></script>
 
-                <link   href="https://fonts.googleapis.com/css?family=Julius+Sans+One|Poiret+One|Roboto:300" 
+                <link   href="https://fonts.googleapis.com/css?family=Julius+Sans+One|Oxygen|Poiret+One|Roboto:300" 
                         rel="stylesheet"/>
                 {this.props.children}
             </div>

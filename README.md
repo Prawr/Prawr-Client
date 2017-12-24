@@ -27,6 +27,11 @@ For the API-Connection, we use the [unirest client](http://unirest.io/nodejs.htm
 
 ### Fonts
 There are three main fonts, those are:
-* **Roboto** for normal text
+* **Roboto** & **Oxygen** for normal text
 * **Poiret One** for headlines
 * **Julius Sans One** For things such as the page title
+**Serif Fonts**
+Embed them manually with `<link href="https://fonts.googleapis.com/css?family=Lustria|Vidaloka" rel="stylesheet">`
+so the load time isn't that long on every page.
+* **Vidaloka** for headlines
+* **Lustria** for text
